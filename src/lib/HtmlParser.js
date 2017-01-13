@@ -5,8 +5,13 @@ const converters = {
     return new Promise((resolve, reject) => {
       jsom.env({
                  html: html,
+                 scripts: [
+                   'https://code.jquery.com/jquery-1.12.4.min.js',
+                 ],
                  features: {
-                   SkipExternalResources: true
+                   SkipExternalResources: true,
+                   FetchExternalResources: [], // disable remote resources
+                   ProcessExternalResources: [], // disable remote resources
                  },
                  done: (err, window) => {
                    if (err) {
