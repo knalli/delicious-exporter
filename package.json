@@ -9,6 +9,7 @@
     "test": "babel-node spec/run.js"
   },
   "dependencies": {
+    "jsdom": "^9.9.1",
     "request": "^2.79.0",
     "request-promise": "^4.1.1"
   },
