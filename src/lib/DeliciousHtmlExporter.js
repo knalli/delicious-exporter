@@ -2,12 +2,55 @@ import fs from "fs";
 import request from "request-promise";
 import HtmlParser from "./HtmlParser.js";
 
+class RemoteHttpLoader {
+
+  constructor(baseEndpoint, username) {
+    this.username = username;
+    this.baseEndpoint = baseEndpoint;
+  }
+
+  loadPage(page) {
+    return new Promise((resolve, reject) => {
+      request(`${this.baseEndpoint}/${this.username}?page=${page}`)
+        .then(resolve, reject);
+    });
+  }
+
+}
+
+class LocalFileLoader {
+
+  constructor(filePrefix, fileSuffix) {
+    this.filePrefix = filePrefix;
+    this.fileSuffix = fileSuffix;
+  }
+
+  loadPage(page) {
+    return new Promise((resolve, reject) => {
+      fs.readFile(`${this.filePrefix}${page}${this.fileSuffix}`, 'utf8', (err, data) => {
+        if (err) {
+          reject({
+                   message: err.message
+                 });
+        } else {
+          resolve(data.toString());
+        }
+      });
+    });
+  }
+
+}
+
 class DeliciousHtmlExporter {
 
   constructor({username, baseEndpoint = 'https://del.icio.us', writeHtmlToDisk = false}) {
+    this.filePrefix = 'output/page_';
+    this.fileSuffix = '.html';
     this.username = username;
     this.baseEndpoint = baseEndpoint;
     this.writeHtmlToDiskEnabled = writeHtmlToDisk;
+    this.loader = new LocalFileLoader(this.filePrefix, this.fileSuffix);
+    //this.loader = new RemoteHttpLoader(this.baseEndpoint, this.username);
     this.parser = new HtmlParser();
   }
 
@@ -29,17 +72,17 @@ class DeliciousHtmlExporter {
   }
 
   fetchPage(page = 1) {
-    return request(`${this.baseEndpoint}/${this.username}?page=${page}`)
-      .then((html) => {
-        if (this.writeHtmlToDiskEnabled) {
-          this.writeHtmlToDisk(page, html);
-        }
-        return this.parser.parse(html);
-      })
-      .then(response => {
-        console.log(`Fetched page ${response.page.number}/${response.page.total}`);
-        return response;
-      });
+    return this.loader.loadPage(page)
+               .then((html) => {
+                 if (this.writeHtmlToDiskEnabled) {
+                   this.writeHtmlToDisk(page, html);
+                 }
+                 return this.parser.parse(html);
+               })
+               .then(response => {
+                 console.log(`Fetched page ${response.page.number}/${response.page.total}`);
+                 return response;
+               });
   }
 
   collectAndFetchNext(currentResponse, combinedResult) {
@@ -56,7 +99,7 @@ class DeliciousHtmlExporter {
   }
 
   writeHtmlToDisk(page, htmlString) {
-    fs.writeFile(`output/page_${page}.html`, htmlString);
+    fs.writeFile(`${this.filePrefix}${page}${this.fileSuffix}`, 'utf8', htmlString);
   }
 
 }
