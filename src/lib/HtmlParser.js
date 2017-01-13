@@ -18,7 +18,6 @@ const converters = {
                      reject(err);
                    } else {
                      resolve(window);
-                     //window.close(); // TODO
                    }
                  }
                })
