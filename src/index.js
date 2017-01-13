@@ -1,3 +1,4 @@
+import fs from "fs";
 import {DeliciousHtmlExporter as Exporter} from "./lib";
 
 const exporter = new Exporter({username: 'knalli', writeHtmlToDisk: true});

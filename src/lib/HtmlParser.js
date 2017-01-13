@@ -49,10 +49,16 @@ class HtmlParser {
                       totalElements: parseInt(stats.total, 10),
                       windowStart: parseInt(stats.windowStart, 10),
                       windowEnd: parseInt(stats.windowEnd, 10),
-                      elements: 1 + parseInt(stats.windowEnd, 10) - parseInt(stats.windowStart, 10),
+                      elements: parseInt(stats.windowEnd, 10) - parseInt(stats.windowStart, 10) + 1,
                       number: parseInt(jQuery('.pagination .active').text(), 10),
                     };
-                    page.total = Math.ceil(page.totalElements / page.elements);
+                    if (jQuery('.pagination a').is('[aria-label=Next]')) {
+                      // safe to use elements
+                      page.total = Math.ceil(page.totalElements / page.elements);
+                    } else {
+                      // "page.elements" is smaller, because last page
+                      page.total = page.number;
+                    }
                     if (page.number > 1) {
                       page.prev = page.number - 1;
                     }
