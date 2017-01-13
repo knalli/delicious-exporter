@@ -102,5 +102,6 @@ jspm_packages
 
 dist
 output
+result.json
 
 # Auto-added
