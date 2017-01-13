@@ -41,17 +41,45 @@ class LocalFileLoader {
 
 }
 
+class LocalFileWriter {
+
+  constructor(filePrefix, fileSuffix) {
+    this.filePrefix = filePrefix;
+    this.fileSuffix = fileSuffix;
+  }
+
+  savePage(page, data) {
+    return new Promise((resolve, reject) => {
+      fs.writeFile(`${this.filePrefix}${page}${this.fileSuffix}`, data, 'utf8', (err) => {
+        if (err) {
+          reject({
+                   message: err.message
+                 });
+        } else {
+          resolve();
+        }
+      });
+    });
+  }
+
+}
+
 class DeliciousHtmlExporter {
 
-  constructor({username, baseEndpoint = 'https://del.icio.us', writeHtmlToDisk = false}) {
-    this.filePrefix = 'output/page_';
-    this.fileSuffix = '.html';
-    this.username = username;
-    this.baseEndpoint = baseEndpoint;
-    this.writeHtmlToDiskEnabled = writeHtmlToDisk;
-    this.loader = new LocalFileLoader(this.filePrefix, this.fileSuffix);
-    //this.loader = new RemoteHttpLoader(this.baseEndpoint, this.username);
+  constructor({username, baseEndpoint = 'https://del.icio.us', writeHtmlToDirectory = false, readHtmlFromDirectory = false}) {
+    if (this.readHtmlFromDirectory) {
+      this.loader = new LocalFileLoader(`${readHtmlFromDirectory}/page_`, '.html');
+    } else {
+      this.loader = new RemoteHttpLoader(baseEndpoint, username);
+    }
+    if (writeHtmlToDirectory) {
+      this.writer = new LocalFileWriter(`${writeHtmlToDirectory}/page_`, '.html');
+    }
     this.parser = new HtmlParser();
+
+    console.log(`Starting del.icio.us HTML exporter for '${username}' @ '${baseEndpoint}'`);
+    console.log('  - reading from ' + (readHtmlFromDirectory ? (`<local: '${readHtmlFromDirectory}'>`) : '<remote: web api>'));
+    console.log('  - writing results ' + (writeHtmlToDirectory ? (`yes <local: ${writeHtmlToDirectory}>`) : 'no'));
   }
 
   fetch() {
@@ -74,8 +102,8 @@ class DeliciousHtmlExporter {
   fetchPage(page = 1) {
     return this.loader.loadPage(page)
                .then((html) => {
-                 if (this.writeHtmlToDiskEnabled) {
-                   this.writeHtmlToDisk(page, html);
+                 if (this.writer) {
+                   this.writer.savePage(page, html)
                  }
                  return this.parser.parse(html);
                })
@@ -87,7 +115,7 @@ class DeliciousHtmlExporter {
 
   collectAndFetchNext(currentResponse, combinedResult) {
     return new Promise((resolve, reject) => {
-      combinedResult.items.concat(currentResponse.items);
+      combinedResult.items.push(...currentResponse.items);
       if (currentResponse.page.next) {
         this.fetchPage(currentResponse.page.next)
             .then(nextResponse => this.collectAndFetchNext(nextResponse, combinedResult))
@@ -96,10 +124,6 @@ class DeliciousHtmlExporter {
         resolve(combinedResult);
       }
     });
-  }
-
-  writeHtmlToDisk(page, htmlString) {
-    fs.writeFile(`${this.filePrefix}${page}${this.fileSuffix}`, 'utf8', htmlString);
   }
 
 }

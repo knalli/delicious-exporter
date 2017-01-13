@@ -2,13 +2,17 @@
   "name": "delicious-exporter",
   "version": "0.0.0",
   "private": true,
-  "main": "./dist/index.js",
+  "main": "./dist/lib/index.js",
   "scripts": {
     "start": "node ./dist/index.js",
     "build": "babel src --out-dir dist",
     "test": "babel-node spec/run.js"
   },
+  "bin": {
+    "delicious-html-exporter": "./dist/index.js"
+  },
   "dependencies": {
+    "commander": "^2.9.0",
     "jsdom": "^9.9.1",
     "request": "^2.79.0",
     "request-promise": "^4.1.1"
