@@ -24,8 +24,11 @@
   "dependencies": {
     "commander": "^2.9.0",
     "jsdom": "^9.9.1",
+    "net-ping": "^1.2.0",
+    "progressbar": "^1.1.1",
     "request": "^2.79.0",
-    "request-promise": "^4.1.1"
+    "request-promise": "^4.1.1",
+    "semaphore": "^1.0.5"
   },
   "devDependencies": {
     "babel-cli": "^6.18.0",

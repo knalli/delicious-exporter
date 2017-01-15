@@ -11,6 +11,7 @@ program.version(pck.version)
        .option('-w --write-html [dir]', 'Each loaded HTML page will be saved in the directory (page_1.html, page_2.html, ...)')
        .option('-r --read-html [dir]', 'Instead of loading the pages from the API, it reads them from the directory')
        .option('-o --output-file [file]', 'Result file', 'result.json')
+       .option('-v --verify-urls', 'Should the urls being verified if still valid?')
        .parse(process.argv);
 
 if (program.readHtml && program.writeHtml && program.readHtml === program.writeHtml) {
@@ -25,14 +26,25 @@ if (program.username) {
     baseEndpoint: program.endpoint,
     readHtmlFromDirectory: program.readHtml,
     writeHtmlToDirectory: program.writeHtml,
+    validityOptions: {
+      urls: program.verifyUrls
+    },
   });
 
   exporter.fetch()
           .then((result) => {
-            console.log(`Finished, found ${result.items.length} items`);
-            fs.writeFile(program.outputFile, JSON.stringify(result));
-            console.log(`Result file: ${program.outputFile}`);
+            console.log(`Finished, found ${result.items.length} items, writing result file...`);
+            fs.writeFile(program.outputFile, JSON.stringify(result), 'utf8', (err) => {
+              if (err) {
+                console.log(`ERROR: Failed writing result file: ${err.message}`);
+                process.exit(1);
+              } else {
+                console.log(`SUCCESS: Result file: ${program.outputFile}`);
+                process.exit(0);
+              }
+            });
           }, (err) => {
-            console.error('FAILED: ' + JSON.stringify(err));
+            console.error('ERROR: ' + JSON.stringify(err));
+            process.exit(1);
           });
 }
