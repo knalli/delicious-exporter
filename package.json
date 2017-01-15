@@ -12,7 +12,7 @@
     "test": "babel-node spec/run.js"
   },
   "bin": {
-    "delicious-html-exporter": "./dist/index.js"
+    "delicious-exporter": "./dist/index.js"
   },
   "dependencies": {
     "commander": "^2.9.0",
