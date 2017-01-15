@@ -81,7 +81,7 @@ class DeliciousHtmlExporter {
     this.parser = new HtmlParser();
 
     console.log(`Starting del.icio.us HTML exporter for '${username}' @ '${baseEndpoint}'`);
-    console.log('  - reading from ' + (readHtmlFromDirectory ? (`<local: '${readHtmlFromDirectory}'>`) : '<remote: web api>'));
+    console.log('  - reading from ' + (readHtmlFromDirectory ? (`<local: '${readHtmlFromDirectory}'>`) : `<remote: ${baseEndpoint}>` ));
     console.log('  - writing results ' + (writeHtmlToDirectory ? (`yes <local: ${writeHtmlToDirectory}>`) : 'no'));
   }
 
