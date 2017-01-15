@@ -7,7 +7,9 @@
     "name": "Jan Philipp"
   },
   "scripts": {
+    "clean": "rm -rf ./dist",
     "start": "node ./dist/index.js",
+    "prepublish": "npm run clean && npm run build",
     "build": "babel src --out-dir dist",
     "test": "babel-node spec/run.js"
   },
