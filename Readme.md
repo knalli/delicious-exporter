@@ -1,5 +1,7 @@
 # del.icio.us exporter
 
+Because there is no del.icio.us exporter anymore.
+
 ## Why?
 
 [del.icio.us](https://del.icio.us) is a bookmark service, which does not stores the user's bookmarked 
