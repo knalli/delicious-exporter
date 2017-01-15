@@ -1,4 +1,8 @@
 .idea
+.babelrc
+.nvmrc
+*.iml
 src
 output
 result.json
+spec
