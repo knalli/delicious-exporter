@@ -1,3 +1,5 @@
+#! /usr/bin/env node
+
 import fs from "fs";
 import {DeliciousHtmlExporter as Exporter} from "./lib";
 import program from "commander";
