@@ -1,6 +1,11 @@
 {
   "name": "delicious-exporter",
   "version": "1.0.1",
+  "description": "Because there is no del.icio.us exporter anymore.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/knalli/delicious-exporter.git"
+  },
   "main": "./dist/lib/index.js",
   "author": {
     "email": "knallisworld@googlemail.com",
