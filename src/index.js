@@ -8,7 +8,7 @@ import pck from "./../package.json";
 program.version(pck.version)
        .option('-u --username [username]', 'Your del.icio.us username')
        .option('-e --endpoint [endpoint]', 'The endpoint of the API', 'https://del.icio.us')
-       .option('-w --write-html [dir]', 'Each loaded HTML page will be saved in the directory')
+       .option('-w --write-html [dir]', 'Each loaded HTML page will be saved in the directory (page_1.html, page_2.html, ...)')
        .option('-r --read-html [dir]', 'Instead of loading the pages from the API, it reads them from the directory')
        .option('-o --output-file [file]', 'Result file', 'result.json')
        .parse(process.argv);

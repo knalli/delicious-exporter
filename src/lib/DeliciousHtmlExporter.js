@@ -73,7 +73,7 @@ class DeliciousHtmlExporter {
       this.loader = new RemoteHttpLoader(baseEndpoint, username);
     }
     if (writeHtmlToDirectory && typeof writeHtmlToDirectory === 'string') {
-      if (!fs.existsSync(writeHtmlToDirectory)){
+      if (!fs.existsSync(writeHtmlToDirectory)) {
         fs.mkdirSync(writeHtmlToDirectory);
       }
       this.writer = new LocalFileWriter(`${writeHtmlToDirectory}/page_`, '.html');
@@ -107,6 +107,7 @@ class DeliciousHtmlExporter {
                .then((html) => {
                  if (this.writer) {
                    this.writer.savePage(page, html)
+                       .catch(error => console.error('Failed to write page due: ' + error.message));
                  }
                  return this.parser.parse(html);
                })
