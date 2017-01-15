@@ -67,12 +67,15 @@ class LocalFileWriter {
 class DeliciousHtmlExporter {
 
   constructor({username, baseEndpoint = 'https://del.icio.us', writeHtmlToDirectory = false, readHtmlFromDirectory = false}) {
-    if (this.readHtmlFromDirectory) {
+    if (readHtmlFromDirectory) {
       this.loader = new LocalFileLoader(`${readHtmlFromDirectory}/page_`, '.html');
     } else {
       this.loader = new RemoteHttpLoader(baseEndpoint, username);
     }
-    if (writeHtmlToDirectory) {
+    if (writeHtmlToDirectory && typeof writeHtmlToDirectory === 'string') {
+      if (!fs.existsSync(writeHtmlToDirectory)){
+        fs.mkdirSync(writeHtmlToDirectory);
+      }
       this.writer = new LocalFileWriter(`${writeHtmlToDirectory}/page_`, '.html');
     }
     this.parser = new HtmlParser();
