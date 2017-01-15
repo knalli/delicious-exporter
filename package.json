@@ -1,6 +1,6 @@
 {
   "name": "delicious-exporter",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "./dist/lib/index.js",
   "author": {
     "email": "knallisworld@googlemail.com",
