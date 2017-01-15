@@ -76,7 +76,7 @@ class HtmlParser {
                                           return {
                                             id: $element.attr('md5'),
                                             created: new Date(1000 * parseInt($element.attr('date'))),
-                                            title: $element.find('.articleTitlePan > h3 > a').data('title'),
+                                            title: $element.find('.articleTitlePan > h3 > a').attr('title'),
                                             url: $element.find('.articleInfoPan > p > a').attr('href'),
                                             count: parseInt($element.find('.articleInfoPan > .savesCount > p').text().match(/(\d+) Saves?/)[1], 10),
                                             tags: jQuery.makeArray($element.find('.thumbTBriefTxt .tagName a'))
