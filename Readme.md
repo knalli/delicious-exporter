@@ -1,5 +1,7 @@
 # del.icio.us exporter
 
+[![npm version](https://img.shields.io/npm/v/delicious-exporter.svg)](https://www.npmjs.com/package/delicious-exporter) [![Build Status](https://travis-ci.org/knalli/delicious-exporter.svg)](https://travis-ci.org/knalli/delicious-exporter) [![License](http://img.shields.io/:license-mit-blue.svg)](http://doge.mit-license.org)
+
 Because there is no del.icio.us exporter anymore.
 
 ## Why?
