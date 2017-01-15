@@ -1,8 +1,11 @@
 {
   "name": "delicious-exporter",
-  "version": "0.0.0",
-  "private": true,
+  "version": "1.0.0",
   "main": "./dist/lib/index.js",
+  "author": {
+    "email": "knallisworld@googlemail.com",
+    "name": "Jan Philipp"
+  },
   "scripts": {
     "start": "node ./dist/index.js",
     "build": "babel src --out-dir dist",
