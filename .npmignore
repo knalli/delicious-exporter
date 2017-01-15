@@ -1,6 +1,7 @@
 .idea
 .babelrc
 .nvmrc
+.travis.yml
 *.iml
 src
 output
