@@ -12,7 +12,7 @@
     "name": "Jan Philipp"
   },
   "scripts": {
-    "clean": "rm -rf ./dist",
+    "clean": "n-clean ./dist",
     "start": "node ./dist/index.js",
     "prepublish": "npm run clean && npm run build",
     "build": "babel src --out-dir dist",
@@ -25,10 +25,12 @@
     "commander": "^2.9.0",
     "jsdom": "^9.9.1",
     "net-ping": "^1.2.0",
+    "npm-build-tools": "^2.2.5",
     "progressbar": "^1.1.1",
     "request": "^2.79.0",
     "request-promise": "^4.1.1",
-    "semaphore": "^1.0.5"
+    "semaphore": "^1.0.5",
+    "set-cookie-parser": "^2.0.0"
   },
   "devDependencies": {
     "babel-cli": "^6.18.0",
