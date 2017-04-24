@@ -52,11 +52,11 @@ if (program.username) {
                          }
                        });
                      }, (err) => {
-                       console.error('ERROR: ' + JSON.stringify(err));
+                       console.error(`ERROR: ${JSON.stringify(err)}`);
                        process.exit(1);
                      });
     }, (err) => {
-      console.error('ERROR: Failed to request' + err);
+      console.error(`ERROR: ${err}`);
     });
 
 } else {

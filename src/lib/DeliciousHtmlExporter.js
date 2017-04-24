@@ -175,11 +175,17 @@ class DeliciousHtmlExporter {
 
             //also get session field from json result
             let body = JSON.parse(response.body);
+            if (!body.session || !body.session.split) {
+              throw new Error('Invalid session: Maybe wrong username/password?');
+            }
+
             let session = body.session.split('=');
+            console.log(session);
             _cookies.push({
                             name: session[0],
                             value: session[1]
                           });
+            // console.log(`Login successfully, found session for username '${session[0]}'`);
 
             this.cookies = _cookies.reduce((acc, curr) => acc + (curr ? `${curr.name}=${curr.value};` : ''), '');
           })
