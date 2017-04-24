@@ -37,25 +37,27 @@ if (program.username) {
   });
 
   exporter
-  .login()
-  .then(function () {
-      exporter.fetch()
-            .then((result) => {
-              console.log(`Finished, found ${result.items.length} items, writing result file...`);
-              fs.writeFile(program.outputFile, JSON.stringify(result), 'utf8', (err) => {
-                if (err) {
-                  console.log(`ERROR: Failed writing result file: ${err.message}`);
-                  process.exit(1);
-                } else {
-                  console.log(`SUCCESS: Result file: ${program.outputFile}`);
-                  process.exit(0);
-                }
-              });
-            }, (err) => {
-              console.error('ERROR: ' + JSON.stringify(err));
-              process.exit(1);
-            })
-  });
+    .login()
+    .then(() => {
+      return exporter.fetch()
+                     .then((result) => {
+                       console.log(`Finished, found ${result.items.length} items, writing result file...`);
+                       fs.writeFile(program.outputFile, JSON.stringify(result), 'utf8', (err) => {
+                         if (err) {
+                           console.log(`ERROR: Failed writing result file: ${err.message}`);
+                           process.exit(1);
+                         } else {
+                           console.log(`SUCCESS: Result file: ${program.outputFile}`);
+                           process.exit(0);
+                         }
+                       });
+                     }, (err) => {
+                       console.error('ERROR: ' + JSON.stringify(err));
+                       process.exit(1);
+                     });
+    }, (err) => {
+      console.error('ERROR: Failed to request' + err);
+    });
 
 } else {
   program.help();

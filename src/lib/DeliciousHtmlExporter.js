@@ -184,8 +184,7 @@ class DeliciousHtmlExporter {
             this.cookies = _cookies.reduce((acc, curr) => acc + (curr ? `${curr.name}=${curr.value};` : ''), '');
           })
           .then(resolve, reject);
-      }
-      else {
+      } else {
         resolve();
       }
     });
