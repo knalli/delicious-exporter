@@ -149,7 +149,11 @@ class DeliciousHtmlExporter {
     this.parser = new HtmlParser();
     this.verifier = new ResultVerifier({verbose: this.verbose}, validityOptions);
 
-    console.log(`Starting del.icio.us HTML exporter for '${username}:${password}' @ '${baseEndpoint}'`);
+    let scope = `'${username}'`;
+    if (password) {
+      scope = `'${username}/***'`;
+    }
+    console.log(`Starting del.icio.us HTML exporter for ${scope} @ '${baseEndpoint}'`);
     console.log('  - reading from ' + (readHtmlFromDirectory ? (`<local: '${readHtmlFromDirectory}'>`) : `<remote: ${baseEndpoint}>`));
     console.log('  - writing results ' + (writeHtmlToDirectory ? (`yes <local: ${writeHtmlToDirectory}>`) : 'no'));
     console.log(`  - validating results (urls=${validityOptions.urls ? 'yes' : 'no'})`);
