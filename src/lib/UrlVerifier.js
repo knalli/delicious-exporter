@@ -122,8 +122,8 @@ class UrlVerifier {
             reject('connection refused');
           } else if (err.code === 'ECONNRESET') {
             reject('connection reset');
-          //} else if (err.code === 'ETIMEDOUT') {
-          //  reject('timed out');
+            //} else if (err.code === 'ETIMEDOUT') {
+            //  reject('timed out');
           } else if (err.reason && err.reason.indexOf('is not in the cert\'s altnames')) {
             reject('ssl invalid');
           } else {

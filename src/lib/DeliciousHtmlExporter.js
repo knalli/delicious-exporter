@@ -14,11 +14,11 @@ class RemoteHttpLoader {
 
   loadPage(page, cookies) {
     return request({
-      uri: `${this.baseEndpoint}/${this.username}?page=${page}`,
-      headers: {
-          'Cookie': cookies
-      }
-    });
+                     uri: `${this.baseEndpoint}/${this.username}?page=${page}`,
+                     headers: {
+                       'Cookie': cookies
+                     }
+                   });
   }
 }
 
@@ -34,8 +34,8 @@ class LocalFileLoader {
       fs.readFile(`${this.filePrefix}${page}${this.fileSuffix}`, 'utf8', (err, data) => {
         if (err) {
           reject({
-            message: err.message
-          });
+                   message: err.message
+                 });
         } else {
           resolve(data.toString());
         }
@@ -57,8 +57,8 @@ class LocalFileWriter {
       fs.writeFile(`${this.filePrefix}${page}${this.fileSuffix}`, data, 'utf8', (err) => {
         if (err) {
           reject({
-            message: err.message
-          });
+                   message: err.message
+                 });
         } else {
           resolve();
         }
@@ -70,10 +70,10 @@ class LocalFileWriter {
 
 class ResultVerifier {
 
-  constructor({ verbose = false }, { urls = false }) {
+  constructor({verbose = false}, {urls = false}) {
     this.verbose = verbose;
     this.urlVerifier = urls
-      ? new UrlVerifier({ verbose: verbose })
+      ? new UrlVerifier({verbose: verbose})
       : null;
   }
 
@@ -89,14 +89,14 @@ class ResultVerifier {
 
   verifyItem(item, progress) {
     return Promise.all([
-      this.verifyItem_url(item)
-    ])
-      .then(() => {
-        if (progress) {
-          progress.addTick();
-        }
-        return item;
-      });
+                         this.verifyItem_url(item)
+                       ])
+                  .then(() => {
+                    if (progress) {
+                      progress.addTick();
+                    }
+                    return item;
+                  });
   }
 
   verifyItem_url(item) {
@@ -112,14 +112,14 @@ class ResultVerifier {
         console.log(`Verify item ${item.id} '${item.title}: ${item.url}'`);
       }
       this.urlVerifier.verify(item.url)
-        .then(applyResult, applyResult)
-        .then(() => {
-          if (this.verbose) {
-            console.log(`Verify item ${item.id} '${item.title}: ${item.url}' COMPLETED`);
-          }
-          resolve(item);
-        })
-        .catch(() => resolve(item));
+          .then(applyResult, applyResult)
+          .then(() => {
+            if (this.verbose) {
+              console.log(`Verify item ${item.id} '${item.title}: ${item.url}' COMPLETED`);
+            }
+            resolve(item);
+          })
+          .catch(() => resolve(item));
     });
   }
 
@@ -127,7 +127,7 @@ class ResultVerifier {
 
 class DeliciousHtmlExporter {
 
-  constructor({ username, password, baseEndpoint = 'https://del.icio.us', writeHtmlToDirectory = false, readHtmlFromDirectory = false, validityOptions = {} }) {
+  constructor({username, password, baseEndpoint = 'https://del.icio.us', writeHtmlToDirectory = false, readHtmlFromDirectory = false, validityOptions = {}}) {
     this.verbose = false;
     this.username = username;
     this.password = password;
@@ -147,7 +147,7 @@ class DeliciousHtmlExporter {
       this.writer = new LocalFileWriter(`${writeHtmlToDirectory}/page_`, '.html');
     }
     this.parser = new HtmlParser();
-    this.verifier = new ResultVerifier({ verbose: this.verbose }, validityOptions);
+    this.verifier = new ResultVerifier({verbose: this.verbose}, validityOptions);
 
     console.log(`Starting del.icio.us HTML exporter for '${username}:${password}' @ '${baseEndpoint}'`);
     console.log('  - reading from ' + (readHtmlFromDirectory ? (`<local: '${readHtmlFromDirectory}'>`) : `<remote: ${baseEndpoint}>`));

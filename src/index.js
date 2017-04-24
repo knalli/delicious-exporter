@@ -13,7 +13,7 @@ program.version(pck.version)
        .option('-r --read-html [dir]', 'Instead of loading the pages from the API, it reads them from the directory')
        .option('-o --output-file [file]', 'Result file', 'delicious.json')
        .option('-v --verify-urls', 'Should the urls being verified if still valid?')
-       .action(function(username) {
+       .action((username) => {
          program.username = username;
        })
        .parse(process.argv);
@@ -26,15 +26,15 @@ if (program.readHtml && program.writeHtml && program.readHtml === program.writeH
 if (program.username) {
 
   const exporter = new Exporter({
-    username: program.username,
-    password: program.password,
-    baseEndpoint: program.endpoint,
-    readHtmlFromDirectory: program.readHtml,
-    writeHtmlToDirectory: program.writeHtml,
-    validityOptions: {
-      urls: program.verifyUrls
-    },
-  });
+                                  username: program.username,
+                                  password: program.password,
+                                  baseEndpoint: program.endpoint,
+                                  readHtmlFromDirectory: program.readHtml,
+                                  writeHtmlToDirectory: program.writeHtml,
+                                  validityOptions: {
+                                    urls: program.verifyUrls
+                                  },
+                                });
 
   exporter
     .login()
