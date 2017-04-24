@@ -11,6 +11,7 @@
     "email": "knallisworld@googlemail.com",
     "name": "Jan Philipp"
   },
+  "license": "MIT",
   "scripts": {
     "clean": "n-clean ./dist",
     "start": "node ./dist/index.js",
@@ -23,7 +24,7 @@
   },
   "dependencies": {
     "commander": "^2.9.0",
-    "jsdom": "^9.9.1",
+    "jsdom": "~9.9.1",
     "net-ping": "^1.2.0",
     "npm-build-tools": "^2.2.5",
     "progressbar": "^1.1.1",
