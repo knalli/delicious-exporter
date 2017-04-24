@@ -85,5 +85,6 @@ jspm_packages
 dist
 output
 result.json
+delicious.json
 
 # Auto-added
