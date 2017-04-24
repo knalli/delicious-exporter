@@ -1,6 +1,6 @@
 {
   "name": "delicious-exporter",
-  "version": "1.0.3",
+  "version": "1.1.0",
   "description": "Because there is no del.icio.us exporter anymore.",
   "repository": {
     "type": "git",
