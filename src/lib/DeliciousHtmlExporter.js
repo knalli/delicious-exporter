@@ -184,7 +184,6 @@ class DeliciousHtmlExporter {
             }
 
             let session = body.session.split('=');
-            console.log(session);
             _cookies.push({
                             name: session[0],
                             value: session[1]
