@@ -17,6 +17,12 @@ Because the export feature (api) has been removed for a while, I need a export t
 npm install -g delicious-exporter
 ```
 
+or
+
+```
+yarn global add delicious-exporter
+```
+
 ## How to use?
 
 ### Basic options
@@ -25,14 +31,19 @@ Help
 delicious-exporter --help
 ```
 
-Download bookmarks for user `knalli`
+Download public bookmarks for user `knalli`
 ```
-delicious-exporter --username knalli
+delicious-exporter knalli
+```
+
+Download public and private bookmarks for user `knalli`
+```
+delicious-exporter knalli -p password
 ```
 
 ### Advanced options
 
-* The default writes the result into `result.json`. This can be changed with `--output-file otherfile.json`.
+* The default writes the result into `delicious.json`. This can be changed with `--output-file otherfile.json`.
 * The downloaded data (actually, HTML files only) can be stored: `--write-html output/`
 * Instead of re-downloading all files, the files can read by directory (see `--write-html`): `--read-html output/` 
 

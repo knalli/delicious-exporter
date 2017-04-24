@@ -80,7 +80,8 @@ class HtmlParser {
                                             url: $element.find('.articleInfoPan > p > a').attr('href'),
                                             count: parseInt($element.find('.articleInfoPan > .savesCount > p').text().match(/(\d+) Saves?/)[1], 10),
                                             tags: jQuery.makeArray($element.find('.thumbTBriefTxt .tagName a'))
-                                                        .map((element) => element.innerHTML)
+                                                        .map((element) => element.innerHTML),
+                                            private: $element.find('.articleThumbBlock').hasClass('privateArticle')
                                           };
                                         });
 
